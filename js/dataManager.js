@@ -40,12 +40,19 @@ function getProductos() {
 export function guardarProducto(producto) {
     
     // --- Validación 1: Campos obligatorios (CA de Tarea4-G6) ---
-    // Si 'nombre' o 'precio' están vacíos o nulos
-    if (!producto.nombre || !producto.precio) {
-        console.error("Error de validación: Nombre y Precio son obligatorios.");
+    // Nombre obligatorio. Precio puede ser 0 pero no puede ser undefined o NaN
+    if (!producto.nombre || String(producto.nombre).trim() === '') {
+        console.error("Error de validación: Nombre es obligatorio.");
         return { 
             success: false, 
-            error: "Campos obligatorios faltantes (Nombre, Precio)." 
+            error: "Campo obligatorio faltante: Nombre." 
+        };
+    }
+    if (producto.precio === undefined || producto.precio === null || Number.isNaN(Number(producto.precio))) {
+        console.error("Error de validación: Precio inválido o faltante.");
+        return {
+            success: false,
+            error: "Precio inválido o faltante. Debe ser un número (0 permitido)."
         };
     }
 
@@ -81,6 +88,23 @@ export function guardarProducto(producto) {
 export function getProductosVisibles() {
     // Simplemente llamamos a la función privada
     return getProductos();
+}
+
+/**
+ * (PÚBLICA) Elimina un producto por su código.
+ * @param {string} codigo
+ * @returns {object} {success:true} o {success:false, error: '...'}
+ */
+export function eliminarProducto(codigo) {
+    const productosActuales = getProductos();
+    const idx = productosActuales.findIndex(p => p.codigo === codigo);
+    if (idx === -1) {
+        console.error('Intento de eliminar producto no existente:', codigo);
+        return { success: false, error: 'Producto no encontrado' };
+    }
+    productosActuales.splice(idx, 1);
+    localStorage.setItem('productos', JSON.stringify(productosActuales));
+    return { success: true };
 }
 
 // --- 3. FUNCIONES DE PROVEEDORES (HU-2) ---

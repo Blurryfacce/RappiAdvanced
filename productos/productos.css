@@ -72,6 +72,16 @@ header h1{margin:0 0 1rem 0;}
 /* Ajustes para la columna de acciones */
 thead th:last-child{ width:110px; }
 tbody td:last-child{ text-align:right; }
+
+/* Animación al eliminar fila */
+.row-removing{
+  opacity: 0;
+  transform: translateX(-12px) scale(0.98);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+.row-removing td{
+  padding-top: 0; padding-bottom: 0;
+}
 form{
   background:var(--card);
   border:1px solid var(--border);

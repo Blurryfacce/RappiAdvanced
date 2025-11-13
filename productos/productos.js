@@ -1,4 +1,4 @@
-import { guardarProducto, getProductos, eliminarProducto } from "../js/dataManager.js";
+import { guardarProducto, getProductosVisibles, eliminarProducto } from "../js/dataManager.js";
 
 const form = document.getElementById("productoForm");
 const messageEl = document.getElementById("message");
@@ -41,7 +41,7 @@ function escapeHtml(str = "") {
 
 async function loadProductos() {
   try {
-    const list = await Promise.resolve(getProductos());
+    const list = await Promise.resolve(getProductosVisibles());
     renderProductos(list);
   } catch (err) {
     showMessage("error", "Error al leer productos");
@@ -90,6 +90,14 @@ tableBody.addEventListener('click', async (evt) => {
   const confirmMsg = `¿Eliminar producto con código "${codigo}"?`;
   if (!confirm(confirmMsg)) return;
   try {
+    const row = btn.closest('tr');
+    // Animación: agregar clase, esperar y luego llamar al backend
+    if (row) {
+      row.classList.add('row-removing');
+      // esperar el tiempo de la transición CSS antes de borrar del storage
+      await new Promise(r => setTimeout(r, 280));
+    }
+
     const res = await Promise.resolve(eliminarProducto(codigo));
     if (res && res.success) {
       showMessage('success', 'Producto eliminado.');
