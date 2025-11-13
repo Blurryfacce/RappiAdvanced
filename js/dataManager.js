@@ -83,6 +83,41 @@ export function getProductosVisibles() {
     return getProductos();
 }
 
+/**
+ * (PÚBLICA) Elimina un producto por su código.
+ * @param {string} codigo - El código del producto a eliminar
+ * @returns {object} - {success: true} o {success: false, error: "Mensaje de error"}
+ */
+export function eliminarProducto(codigo) {
+    if (!codigo) {
+        console.error("Error: Código de producto no proporcionado.");
+        return {
+            success: false,
+            error: "Código de producto requerido."
+        };
+    }
+
+    const productosActuales = getProductos();
+    const indice = productosActuales.findIndex(p => p.codigo === codigo);
+
+    if (indice === -1) {
+        console.error("Error: Producto no encontrado.");
+        return {
+            success: false,
+            error: "Producto no encontrado."
+        };
+    }
+
+    // Eliminar el producto del array
+    productosActuales.splice(indice, 1);
+    
+    // Guardar la lista actualizada
+    localStorage.setItem('productos', JSON.stringify(productosActuales));
+    
+    console.log("Producto eliminado exitosamente:", codigo);
+    return { success: true };
+}
+
 // --- 3. FUNCIONES DE PROVEEDORES (HU-2) ---
 
 /**
@@ -131,6 +166,41 @@ export function getProveedoresVisibles() {
     return getProveedores();
 }
 
+/**
+ * (PÚBLICA) Elimina un proveedor por su razón social.
+ * @param {string} razonSocial - La razón social del proveedor a eliminar
+ * @returns {object} - {success: true} o {success: false, error: "Mensaje de error"}
+ */
+export function eliminarProveedor(razonSocial) {
+    if (!razonSocial) {
+        console.error("Error: Razón Social no proporcionada.");
+        return {
+            success: false,
+            error: "Razón Social requerida."
+        };
+    }
+
+    const proveedoresActuales = getProveedores();
+    const indice = proveedoresActuales.findIndex(p => p.razonSocial === razonSocial);
+
+    if (indice === -1) {
+        console.error("Error: Proveedor no encontrado.");
+        return {
+            success: false,
+            error: "Proveedor no encontrado."
+        };
+    }
+
+    // Eliminar el proveedor del array
+    proveedoresActuales.splice(indice, 1);
+    
+    // Guardar la lista actualizada
+    localStorage.setItem('proveedores', JSON.stringify(proveedoresActuales));
+    
+    console.log("Proveedor eliminado exitosamente:", razonSocial);
+    return { success: true };
+}
+
 
 // --- 4. EJECUCIÓN INICIAL ---
 // Esto ejecuta la función `init()` en cuanto el script es cargado por primera vez.
@@ -140,5 +210,7 @@ init();
 // Temporal para pruebas en consola
 window.testGuardarProducto = guardarProducto;
 window.testGetProductos = getProductosVisibles;
+window.testEliminarProducto = eliminarProducto;
 window.testGuardarProveedor = guardarProveedor;
 window.testGetProveedores = getProveedoresVisibles;
+window.testEliminarProveedor = eliminarProveedor;
