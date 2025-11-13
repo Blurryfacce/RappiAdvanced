@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proveedores - RappiAdvanced</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="proveedores.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Gestión de Proveedores</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="btn btn-primary btn-small">Inicio</a>
+    </nav>
+  </header>
+
+  <section class="container">
+    <h2>Nuevo Proveedor</h2>
+    <form id="proveedorForm" novalidate>
+      <div class="form-row">
+        <label for="razonSocial">Razón Social</label>
+        <input id="razonSocial" name="razonSocial" type="text" required />
+      </div>
+      <div class="form-row">
+        <label for="contacto">Contacto</label>
+        <input id="contacto" name="contacto" type="text" />
+      </div>
+      <div class="form-row">
+        <label for="telefono">Teléfono</label>
+        <input id="telefono" name="telefono" type="tel" />
+      </div>
+      <div class="form-row">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" />
+      </div>
+      <div class="form-row">
+        <label for="direccion">Dirección</label>
+        <input id="direccion" name="direccion" type="text" />
+      </div>
+
+      <div class="actions">
+        <button type="submit">Guardar</button>
+        <button type="reset" id="btnReset" class="secondary">Limpiar</button>
+      </div>
+
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </form>
+
+    <h2>Lista de Proveedores</h2>
+    <div class="table-wrap">
+      <table id="proveedoresTable">
+        <thead>
+          <tr>
+            <th>Razón Social</th>
+            <th>Contacto</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Dirección</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- rows dinámicos -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script type="module" src="proveedores.js"></script>
+</body>
+</html>
