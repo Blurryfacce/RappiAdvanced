@@ -1,4 +1,4 @@
-import { guardarProducto, getProductosVisibles, eliminarProducto } from "../js/dataManager.js";
+import { eliminarProducto, getProductosVisibles, guardarProducto } from "../js/dataManager.js";
 
 const form = document.getElementById("productoForm");
 const messageEl = document.getElementById("message");

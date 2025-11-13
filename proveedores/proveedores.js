@@ -1,4 +1,4 @@
-import { getProveedoresVisibles, guardarProveedor, eliminarProveedor } from "../js/dataManager.js";
+import { eliminarProveedor, getProveedoresVisibles, guardarProveedor } from "../js/dataManager.js";
 
 const form = document.getElementById("proveedorForm");
 const messageEl = document.getElementById("message");
