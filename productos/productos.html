@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Productos - RappiAdvanced</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="productos.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Gestión de Productos</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="btn btn-primary btn-small">Inicio</a>
+    </nav>
+  </header>
+
+  <section class="container">
+    <h2>Nuevo Producto</h2>
+    <form id="productoForm" novalidate>
+      <div class="form-row">
+        <label for="codigo">Código</label>
+        <input id="codigo" name="codigo" type="text" required />
+      </div>
+      <div class="form-row">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" type="text" required />
+      </div>
+      <div class="form-row">
+        <label for="precio">Precio</label>
+        <input id="precio" name="precio" type="number" step="0.01" min="0" required />
+      </div>
+      <div class="form-row">
+        <label for="stock">Stock</label>
+        <input id="stock" name="stock" type="number" step="1" min="0" value="0" />
+      </div>
+
+      <div class="actions">
+        <button type="submit">Guardar</button>
+        <button type="reset" id="btnReset" class="secondary">Limpiar</button>
+      </div>
+
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </form>
+
+    <h2>Lista de Inventario</h2>
+    <div class="table-wrap">
+      <table id="productosTable">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- rows dinámicos -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script type="module" src="productos.js"></script>
+</body>
+</html>
