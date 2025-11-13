@@ -1,4 +1,4 @@
-import { guardarProducto, getProductos, eliminarProducto } from "../js/dataManager.js";
+import { guardarProducto, getProductosVisibles, eliminarProducto } from "../js/dataManager.js";
 
 const form = document.getElementById("productoForm");
 const messageEl = document.getElementById("message");
@@ -41,7 +41,7 @@ function escapeHtml(str = "") {
 
 async function loadProductos() {
   try {
-    const list = await Promise.resolve(getProductos());
+    const list = await Promise.resolve(getProductosVisibles());
     renderProductos(list);
   } catch (err) {
     showMessage("error", "Error al leer productos");

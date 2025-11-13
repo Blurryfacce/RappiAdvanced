@@ -1,4 +1,4 @@
-import { getProveedoresVisibles, guardarProveedor } from "../js/dataManager.js";
+import { getProveedoresVisibles, guardarProveedor, eliminarProveedor } from "../js/dataManager.js";
 
 const form = document.getElementById("proveedorForm");
 const messageEl = document.getElementById("message");
@@ -93,7 +93,16 @@ tableBody.addEventListener('click', async (evt) => {
   const confirmMsg = `¿Eliminar proveedor "${razonSocial}"?`;
   if (!confirm(confirmMsg)) return;
   
-  // Nota: La función eliminarProveedor aún no está implementada en dataManager.js
-  // El equipo de Jhair deberá agregarla siguiendo el patrón de eliminarProducto
-  showMessage("error", "Función de eliminar no implementada aún. Debe ser agregada por Jhair en dataManager.js");
+  try {
+    const res = await Promise.resolve(eliminarProveedor(razonSocial));
+    if (res && res.success) {
+      showMessage("success", "Proveedor eliminado correctamente.");
+      loadProveedores();
+    } else {
+      showMessage("error", res && res.error ? res.error : "Error al eliminar proveedor.");
+    }
+  } catch (err) {
+    showMessage("error", "Error inesperado al eliminar.");
+    console.error(err);
+  }
 });
