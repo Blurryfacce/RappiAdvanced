@@ -144,11 +144,109 @@ export function guardarProveedor(proveedor) {
             error: "La Razón Social es obligatoria." 
         };
     }
+
+    // Validar formato de Razón Social: solo letras, números, espacios y caracteres básicos
+    const razonSocialRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,&\-()]+$/;
+    if (!razonSocialRegex.test(proveedor.razonSocial)) {
+        console.error("Error de validación: Formato de Razón Social inválido.");
+        return {
+            success: false,
+            error: "La Razón Social solo puede contener letras, números, espacios y caracteres básicos (.,&-())."
+        };
+    }
+
+    // Validar longitud mínima de Razón Social
+    if (proveedor.razonSocial.trim().length < 3) {
+        console.error("Error de validación: Razón Social muy corta.");
+        return {
+            success: false,
+            error: "La Razón Social debe tener al menos 3 caracteres."
+        };
+    }
+    
+    // --- Validación 2: Teléfono (si se proporciona) ---
+    if (proveedor.telefono && proveedor.telefono.trim() !== '') {
+        // Formato ecuatoriano: permite 09XXXXXXXX, +593XXXXXXXXX, o con guiones/espacios
+        const telefonoRegex = /^(\+593|0)[0-9\s\-()]{8,12}$/;
+        const telefonoLimpio = proveedor.telefono.replace(/[\s\-()]/g, '');
+        
+        if (!telefonoRegex.test(proveedor.telefono)) {
+            console.error("Error de validación: Formato de teléfono inválido.");
+            return {
+                success: false,
+                error: "El teléfono debe tener un formato válido ecuatoriano (ej: 0991234567, +593991234567)."
+            };
+        }
+
+        // Validar longitud del teléfono sin formato
+        if (telefonoLimpio.length < 9 || telefonoLimpio.length > 13) {
+            console.error("Error de validación: Longitud de teléfono incorrecta.");
+            return {
+                success: false,
+                error: "El teléfono debe tener entre 9 y 13 dígitos."
+            };
+        }
+    }
+
+    // --- Validación 3: Email (si se proporciona) ---
+    if (proveedor.email && proveedor.email.trim() !== '') {
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(proveedor.email)) {
+            console.error("Error de validación: Formato de email inválido.");
+            return {
+                success: false,
+                error: "El email debe tener un formato válido (ejemplo@dominio.com)."
+            };
+        }
+    }
+
+    // --- Validación 4: Dirección (si se proporciona) ---
+    if (proveedor.direccion && proveedor.direccion.trim() !== '') {
+        // Permitir caracteres alfanuméricos, espacios y símbolos comunes en direcciones
+        const direccionRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,#\-°/]+$/;
+        if (!direccionRegex.test(proveedor.direccion)) {
+            console.error("Error de validación: Formato de dirección inválido.");
+            return {
+                success: false,
+                error: "La dirección contiene caracteres no válidos."
+            };
+        }
+
+        if (proveedor.direccion.trim().length < 5) {
+            console.error("Error de validación: Dirección muy corta.");
+            return {
+                success: false,
+                error: "La dirección debe tener al menos 5 caracteres."
+            };
+        }
+    }
+
+    // --- Validación 5: Contacto (si se proporciona) ---
+    if (proveedor.contacto && proveedor.contacto.trim() !== '') {
+        const contactoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s.'-]+$/;
+        if (!contactoRegex.test(proveedor.contacto)) {
+            console.error("Error de validación: Formato de contacto inválido.");
+            return {
+                success: false,
+                error: "El nombre de contacto solo puede contener letras, espacios y caracteres básicos (.'-)."
+            };
+        }
+    }
     
     const proveedoresActuales = getProveedores();
     
-    // (NOTA: HU-2 no pedía validación de duplicados, así que no la ponemos.
-    // Si el grupo decide agregarla, se haría igual que en productos).
+    // --- Validación 6: Razón Social duplicada ---
+    const yaExisteRazonSocial = proveedoresActuales.some(
+        p => p.razonSocial.toLowerCase().trim() === proveedor.razonSocial.toLowerCase().trim()
+    );
+    
+    if (yaExisteRazonSocial) {
+        console.error("Error de validación: Razón Social duplicada.");
+        return { 
+            success: false, 
+            error: "Ya existe un proveedor con esta Razón Social." 
+        };
+    }
 
     // --- ¡Éxito! ---
     console.log("Guardando nuevo proveedor:", proveedor);

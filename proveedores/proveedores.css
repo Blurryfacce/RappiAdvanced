@@ -88,12 +88,44 @@ form{
   font-size:.9rem;
   color:var(--muted);
   margin-bottom:.25rem;
+  font-weight:500;
+}
+.form-row label .required{
+  color:var(--danger);
+  font-weight:700;
 }
 .form-row input{
   padding:.5rem;
   border:1px solid var(--border);
   border-radius:4px;
   font-size:1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-row input:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow: 0 0 0 3px rgba(30,136,229,0.1);
+}
+.form-row input.valid{
+  border-color:var(--success);
+  background-color:rgba(46,125,50,0.05);
+}
+.form-row input.valid:focus{
+  box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
+}
+.form-row input.invalid{
+  border-color:var(--danger);
+  background-color:rgba(211,47,47,0.05);
+}
+.form-row input.invalid:focus{
+  box-shadow: 0 0 0 3px rgba(211,47,47,0.1);
+}
+.input-help{
+  display:block;
+  font-size:0.8rem;
+  color:var(--muted);
+  margin-top:0.25rem;
+  font-style:italic;
 }
 .actions{
   display:flex;
