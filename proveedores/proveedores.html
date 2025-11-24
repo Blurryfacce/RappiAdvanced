@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proveedores - RappiAdvanced</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="proveedores.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Gestión de Proveedores</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="btn btn-primary btn-small">Inicio</a>
+    </nav>
+  </header>
+
+  <section class="container">
+    <h2>Nuevo Proveedor</h2>
+    <form id="proveedorForm" novalidate>
+      <div class="form-row">
+        <label for="razonSocial">Razón Social <span class="required">*</span></label>
+        <input 
+          id="razonSocial" 
+          name="razonSocial" 
+          type="text" 
+          required 
+          minlength="3"
+          maxlength="100"
+          pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,&\-()]+"
+          placeholder="Ej: Distribuidora XYZ S.A."
+        />
+        <small class="input-help">Mínimo 3 caracteres. Solo letras, números y caracteres básicos.</small>
+      </div>
+      <div class="form-row">
+        <label for="contacto">Nombre de Contacto</label>
+        <input 
+          id="contacto" 
+          name="contacto" 
+          type="text"
+          maxlength="100"
+          pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s.'-]+"
+          placeholder="Ej: Juan Pérez"
+        />
+        <small class="input-help">Solo letras y caracteres básicos (.'-).</small>
+      </div>
+      <div class="form-row">
+        <label for="telefono">Teléfono</label>
+        <input 
+          id="telefono" 
+          name="telefono" 
+          type="tel"
+          pattern="(\+593|0)[0-9\s\-()]{8,12}"
+          placeholder="Ej: 0991234567 o +593991234567"
+        />
+        <small class="input-help">Formato ecuatoriano. Ej: 0991234567 o +593991234567</small>
+      </div>
+      <div class="form-row">
+        <label for="email">Email</label>
+        <input 
+          id="email" 
+          name="email" 
+          type="email"
+          placeholder="Ej: contacto@empresa.com"
+        />
+        <small class="input-help">Debe tener formato válido de email.</small>
+      </div>
+      <div class="form-row">
+        <label for="direccion">Dirección</label>
+        <input 
+          id="direccion" 
+          name="direccion" 
+          type="text"
+          minlength="5"
+          maxlength="200"
+          pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,#\-°/]+"
+          placeholder="Ej: Av. Principal #123 y Calle Secundaria"
+        />
+        <small class="input-help">Mínimo 5 caracteres. Direccion completa.</small>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Guardar</button>
+        <button type="reset" id="btnReset" class="secondary">Limpiar</button>
+      </div>
+
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </form>
+
+    <h2>Lista de Proveedores</h2>
+    <div class="table-wrap">
+      <table id="proveedoresTable">
+        <thead>
+          <tr>
+            <th>Razón Social</th>
+            <th>Contacto</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Dirección</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- rows dinámicos -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script type="module" src="proveedores.js"></script>
+</body>
+</html>
