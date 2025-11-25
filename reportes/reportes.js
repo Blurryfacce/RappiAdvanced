@@ -1,3 +1,4 @@
+import { isAdmin, isLoggedIn } from "../js/auth.js";
 import { generarReporteIngresos } from "../js/dataManager.js";
 
 const form = document.getElementById("reporteForm");
@@ -125,3 +126,12 @@ form.addEventListener("submit", async (e) => {
     console.error(err);
   }
 });
+
+
+// Verificar permisos al inicio
+if (!isLoggedIn()) {
+    window.location.href = "../login.html";
+} else if (!isAdmin()) {
+    alert("⛔ Acceso Denegado\n\nSolo el Administrador puede ver los reportes financieros (HU-4).");
+    window.location.href = "../index.html"; // Expulsar al inicio
+}

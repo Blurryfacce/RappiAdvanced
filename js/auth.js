@@ -39,17 +39,15 @@ export function denyAccess(messageEl, options = {}) {
   }
 }
 
-// --- Gestión de usuarios (registro / login simple en localStorage) ---
-export function getUsers() {
-  try {
-    const raw = localStorage.getItem('users');
-    if (!raw) return [];
-    return JSON.parse(raw);
-  } catch (e) {
-    console.warn('users inválido en localStorage');
-    return [];
-  }
-}
+const getUsers = () => {
+    try {
+        const users = JSON.parse(localStorage.getItem('users'));
+        return Array.isArray(users) ? users : [];
+    } catch (e) {
+        console.error("Error al cargar usuarios:", e);
+        return [];
+    }
+};
 
 function saveUsers(list) {
   localStorage.setItem('users', JSON.stringify(list || []));
@@ -92,6 +90,29 @@ export function loginUser(username) {
   }
 }
 
-export function logoutUser() {
-  localStorage.removeItem('currentUser');
+export function logoutUser(){
+  localStorage.removeItem('currentUser')
 }
+
+/**
+ * Inicializa el sistema creando usuarios por defecto si no hay ninguno.
+ */
+function initializeUsers() {
+    const users = getUsers();
+    if (users.length === 0) {
+        console.log("Creando usuarios por defecto: admin y empleado.");
+        const defaultAdmin = {
+            username: 'admin',
+            role: 'Administrador'
+        };
+        const defaultEmployee = {
+            username: 'empleado',
+            role: 'Empleado'
+        };
+        
+        saveUsers([defaultAdmin, defaultEmployee]);
+    }
+}
+
+initializeUsers();
+

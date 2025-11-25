@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - RappiAdvanced</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        .login-container { max-width: 400px; margin: 100px auto; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        .form-group input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .message { padding: 10px; margin-top: 15px; border-radius: 4px; }
+        .message.error { background-color: #fdd; color: #a00; border: 1px solid #a00; }
+        .message.success { background-color: #dfd; color: #0a0; border: 1px solid #0a0; }
+        .btn-primary { background-color: #007bff; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 style="text-align: center;">Iniciar Sesión</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" required placeholder="admin o empleado">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+        </form>
+        <div id="loginMessage" class="message"></div>
+    </div>
+    <script type="module" src="./js/login.js"></script>
+</body>
+</html>

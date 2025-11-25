@@ -1,173 +1,224 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>RappiAdvanced - Sistema de Gestión</title>
-        <link rel="stylesheet" href="./css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RappiAdvanced - Sistema de Gestión</title>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
+
 <body>
-        <!-- Navigation Bar -->
-        <nav class="navbar">
-            <div class="navbar-content">
-                <a href="#" class="navbar-brand">
-                    <img src="./images/logo.jpg" alt="Logo" class="navbar-logo">
-                    RappiAdvanced
-                </a>
-                <div class="navbar-menu">
-                    <a href="#inicio" class="nav-link active">Inicio</a>
-                    <a href="#modulos" class="nav-link">Módulos</a>
-                    <a href="#contacto" class="nav-link">Contacto</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#" class="navbar-brand">
+                <img src="./images/logo.jpg" alt="Logo" class="navbar-logo">
+                RappiAdvanced
+            </a>
+            <div class="navbar-menu">
+                <a href="#inicio" class="nav-link active">Inicio</a>
+                <a href="#modulos" class="nav-link">Módulos</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+                <a href="login.html" id="loginBtn" class="nav-link">Iniciar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-section">
+        <div class="logo-container">
+            <img src="./images/logo.jpg" alt="RappiAdvanced Logo" class="logo">
+        </div>
+        <div class="hero-content">
+            <h1>RappiAdvanced</h1>
+            <p>Sistema integral de gestión empresarial. Administra productos, proveedores y optimiza tus procesos de
+                negocio.</p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Confiable</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Disponibilidad</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Módulos Activos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Posibilidades</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Módulos Section -->
+    <section id="modulos" class="modulos-section">
+        <div class="container">
+            <h2 class="section-title">Módulos del Sistema</h2>
+            <p class="section-subtitle">Gestiona tu negocio de forma eficiente con nuestras herramientas especializadas
+            </p>
+
+            <div class="modulos-grid">
+                <div id="card-productos" class="modulo-card">
+                    <img src="./images/paquetes.jpg" alt="Gestión de Productos" class="modulo-icon">
+                    <h3>Productos</h3>
+                    <p>Administra tu inventario completo. Registra, actualiza y controla todos tus productos con
+                        facilidad.</p>
+                    <a href="./productos/productos.html" class="btn btn-primary">Acceder</a>
+                </div>
+
+                <div id="card-proveedores" class="modulo-card">
+                    <img src="./images/servicio.jpg" alt="Gestión de Proveedores" class="modulo-icon">
+                    <h3>Proveedores</h3>
+                    <p>Gestiona tu red de proveedores. Mantén actualizada toda la información de contacto y servicios.
+                    </p>
+                    <a href="./proveedores/proveedores.html" class="btn btn-secondary">Acceder</a>
+                </div>
+
+                <div id="card-salidas" class="modulo-card">
+                    <img src="./images/entrega.jpg" alt="Salidas de Inventario" class="modulo-icon">
+                    <h3>Salidas de Inventario</h3>
+                    <p>Registra salidas de productos por ventas, ajustes o devoluciones. Mantén el stock actualizado en
+                        tiempo real.</p>
+                    <a href="./salidas/salidas.html" class="btn btn-primary">Acceder</a>
+                </div>
+
+                <div id="card-reportes" class="modulo-card">
+                    <img src="./images/paquetes.jpg" alt="Reportes de Ventas" class="modulo-icon">
+                    <h3>Reportes de Ingresos</h3>
+                    <p>Genera reportes de ingresos totales por rango de fechas. Toma decisiones financieras informadas.
+                    </p>
+                    <a href="./reportes/reportes.html" class="btn btn-secondary">Acceder</a>
                 </div>
             </div>
-        </nav>
 
-        <!-- Hero Section -->
-        <section id="inicio" class="hero-section">
-            <div class="logo-container">
-                <img src="./images/logo.jpg" alt="RappiAdvanced Logo" class="logo">
+            <div id="mensaje-publico" style="display: none; text-align: center; padding: 2rem;">
+                <p style="font-size: 1.2rem; color: #666;">
+                    🔒 Para acceder a los módulos de gestión, por favor
+                    <a href="login.html" style="color: var(--primary); font-weight: bold;">Inicia Sesión</a>.
+                </p>
             </div>
-            <div class="hero-content">
-                <h1>RappiAdvanced</h1>
-                <p>Sistema integral de gestión empresarial. Administra productos, proveedores y optimiza tus procesos de negocio.</p>
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Stats Section -->
-        <section class="stats-section">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Confiable</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Disponibilidad</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">4</div>
-                    <div class="stat-label">Módulos Activos</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">∞</div>
-                    <div class="stat-label">Posibilidades</div>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>RappiAdvanced</h3>
+                <p>Sistema de gestión empresarial diseñado para optimizar tus procesos de negocio y mejorar la
+                    productividad.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Twitter">🐦</a>
+                    <a href="#" title="LinkedIn">💼</a>
+                    <a href="#" title="Instagram">📷</a>
                 </div>
             </div>
-        </section>
 
-        <!-- Módulos Section -->
-        <section id="modulos" class="modulos-section">
-            <div class="container">
-                <h2 class="section-title">Módulos del Sistema</h2>
-                <p class="section-subtitle">Gestiona tu negocio de forma eficiente con nuestras herramientas especializadas</p>
-                
-                <div class="modulos-grid">
-                    <!-- Módulo Productos -->
-                    <div class="modulo-card">
-                        <img src="./images/paquetes.jpg" alt="Gestión de Productos" class="modulo-icon">
-                        <h3>Productos</h3>
-                        <p>Administra tu inventario completo. Registra, actualiza y controla todos tus productos con facilidad.</p>
-                        <a href="./productos/productos.html" class="btn btn-primary">Acceder</a>
-                    </div>
-                    
-                    <!-- Módulo Proveedores -->
-                    <div class="modulo-card">
-                        <img src="./images/servicio.jpg" alt="Gestión de Proveedores" class="modulo-icon">
-                        <h3>Proveedores</h3>
-                        <p>Gestiona tu red de proveedores. Mantén actualizada toda la información de contacto y servicios.</p>
-                        <a href="./proveedores/proveedores.html" class="btn btn-secondary">Acceder</a>
-                    </div>
-
-                    <!-- Módulo Salidas de Inventario -->
-                    <div class="modulo-card">
-                        <img src="./images/entrega.jpg" alt="Salidas de Inventario" class="modulo-icon">
-                        <h3>Salidas de Inventario</h3>
-                        <p>Registra salidas de productos por ventas, ajustes o devoluciones. Mantén el stock actualizado en tiempo real.</p>
-                        <a href="./salidas/salidas.html" class="btn btn-primary">Acceder</a>
-                    </div>
-
-                    <!-- Módulo Reportes -->
-                    <div class="modulo-card">
-                        <img src="./images/paquetes.jpg" alt="Reportes de Ventas" class="modulo-icon">
-                        <h3>Reportes de Ingresos</h3>
-                        <p>Genera reportes de ingresos totales por rango de fechas. Toma decisiones financieras informadas.</p>
-                        <a href="./reportes/reportes.html" class="btn btn-secondary">Acceder</a>
-                    </div>
-                </div>
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="./productos/productos.html">Gestión de Productos</a></p>
+                <p><a href="./proveedores/proveedores.html">Gestión de Proveedores</a></p>
+                <p><a href="./salidas/salidas.html">Salidas de Inventario</a></p>
+                <p><a href="./reportes/reportes.html">Reportes de Ingresos</a></p>
+                <p><a href="#inicio">Volver Arriba</a></p>
             </div>
-        </section>
 
-        <!-- Footer -->
-        <footer id="contacto">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>RappiAdvanced</h3>
-                    <p>Sistema de gestión empresarial diseñado para optimizar tus procesos de negocio y mejorar la productividad.</p>
-                    <div class="social-links">
-                        <a href="#" title="Facebook">📘</a>
-                        <a href="#" title="Twitter">🐦</a>
-                        <a href="#" title="LinkedIn">💼</a>
-                        <a href="#" title="Instagram">📷</a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Enlaces Rápidos</h3>
-                    <p><a href="./productos/productos.html">Gestión de Productos</a></p>
-                    <p><a href="./proveedores/proveedores.html">Gestión de Proveedores</a></p>
-                    <p><a href="./salidas/salidas.html">Salidas de Inventario</a></p>
-                    <p><a href="./reportes/reportes.html">Reportes de Ingresos</a></p>
-                    <p><a href="#inicio">Volver Arriba</a></p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <p>📧 contacto@rappiadvanced.com</p>
-                    <p>📞 +593 99 999 9999</p>
-                    <p>📍 Quito, Ecuador</p>
-                    <p>🕐 Lun - Vie: 9:00 - 18:00</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Equipo de Desarrollo</h3>
-                    <p>Jhair Zambrano - Backend</p>
-                    <p>Sergio Rodríguez - Frontend</p>
-                    <p>Isaac Proaño - Frontend</p>
-                    <p>Daniel Moncayo - QA/PO</p>
-                </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 contacto@rappiadvanced.com</p>
+                <p>📞 +593 99 999 9999</p>
+                <p>📍 Quito, Ecuador</p>
+                <p>🕐 Lun - Vie: 9:00 - 18:00</p>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 RappiAdvanced. Todos los derechos reservados. | Sprint 1 - Versión 1.0</p>
-            </div>
-        </footer>
 
-        <script>
-            // Smooth scroll para los enlaces de navegación
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
+            <div class="footer-section">
+                <h3>Equipo de Desarrollo</h3>
+                <p>Jhair Zambrano - Backend</p>
+                <p>Sergio Rodríguez - Frontend</p>
+                <p>Isaac Proaño - Frontend</p>
+                <p>Daniel Moncayo - QA/PO</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 RappiAdvanced. Todos los derechos reservados. | Sprint 1 - Versión 1.0</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Importamos todo lo necesario (incluyendo logoutUser que acabamos de crear)
+        import { isLoggedIn, logoutUser, isAdmin } from './js/auth.js';
+
+        // 1. LOGICA DE NAVEGACIÓN (Smooth Scroll y Navbar)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
+        });
 
-            // Cambiar color de navbar al hacer scroll
-            window.addEventListener('scroll', function() {
-                const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 50) {
-                    navbar.style.boxShadow = '0 4px 30px rgba(0,0,0,0.15)';
-                } else {
-                    navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) navbar.style.boxShadow = '0 4px 30px rgba(0,0,0,0.15)';
+            else navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+        });
+
+        // 2. LÓGICA DE LOGIN / LOGOUT
+        const btn = document.getElementById('loginBtn');
+        if (isLoggedIn()) {
+            btn.textContent = "Cerrar Sesión";
+            btn.href = "#";
+            btn.style.color = "#d32f2f"; // Rojo para indicar salida
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm("¿Deseas cerrar sesión?")) {
+                    logoutUser();
+                    window.location.reload();
                 }
             });
-        </script>
+        }
 
-        <script src="./js/dataManager.js" type="module"></script>
+        // 3. LÓGICA DE VISIBILIDAD DE MÓDULOS (SEGURIDAD VISUAL)
+        const cardProductos = document.getElementById('card-productos');
+        const cardProveedores = document.getElementById('card-proveedores');
+        const cardSalidas = document.getElementById('card-salidas');
+        const cardReportes = document.getElementById('card-reportes');
+        const mensajePublico = document.getElementById('mensaje-publico');
+
+        // Estado inicial: Ocultar todo
+        if (cardProductos) cardProductos.style.display = 'none';
+        if (cardProveedores) cardProveedores.style.display = 'none';
+        if (cardSalidas) cardSalidas.style.display = 'none';
+        if (cardReportes) cardReportes.style.display = 'none';
+
+        if (!isLoggedIn()) {
+            // CASO A: Público General -> Mostrar mensaje de bloqueo
+            if (mensajePublico) mensajePublico.style.display = 'block';
+        } else {
+            // CASO B: Usuario Logueado -> Mostrar módulos básicos
+            if (cardProductos) cardProductos.style.display = 'flex';
+            if (cardProveedores) cardProveedores.style.display = 'flex';
+            if (cardSalidas) cardSalidas.style.display = 'flex';
+
+            // RESTRICCIÓN POR ROL: Solo Admin ve Reportes
+            if (isAdmin()) {
+                if (cardReportes) cardReportes.style.display = 'flex';
+            }
+        }
+    </script>
+
+    <script src="./js/dataManager.js" type="module"></script>
 </body>
 </html>
