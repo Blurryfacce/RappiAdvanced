@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pruebas de Historias de Usuario - RappiAdvanced</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background-color: #f5f5f5;
+    }
+    h1 { color: #333; }
+    h2 { 
+      color: #007bff; 
+      margin-top: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #007bff;
+    }
+    .test-section {
+      background: white;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-case {
+      margin: 1rem 0;
+      padding: 1rem;
+      border-left: 4px solid #28a745;
+      background: #f8f9fa;
+    }
+    .test-case.pending {
+      border-left-color: #ffc107;
+    }
+    .test-case.failed {
+      border-left-color: #dc3545;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin: 0.25rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .btn-test {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-clear {
+      background-color: #dc3545;
+      color: white;
+    }
+    .result {
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .success { background-color: #d4edda; color: #155724; }
+    .error { background-color: #f8d7da; color: #721c24; }
+    .info { background-color: #d1ecf1; color: #0c5460; }
+    code {
+      background-color: #e9ecef;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Pruebas de Historias de Usuario</h1>
+  <p><strong>Propósito:</strong> Verificar que todas las historias de usuario cumplan con sus criterios de aceptación.</p>
+  
+  <div class="test-section">
+    <h2>HU-1: Registrar un nuevo producto</h2>
+    
+    <div class="test-case">
+      <h3>✅ Escenario 1: Registro exitoso de producto</h3>
+      <p><strong>Dado que:</strong> Estoy en el formulario "Nuevo Producto"</p>
+      <p><strong>Cuando:</strong> Ingreso código "SKU-001", nombre "Camisa Talla M", precio $10, stock 50</p>
+      <p><strong>Entonces:</strong> El producto se guarda y aparece en la lista</p>
+      <button class="btn-test" onclick="testHU1_Escenario1()">Ejecutar Prueba</button>
+      <div id="result-hu1-e1" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-case">
+      <h3>✅ Escenario 2: Campos obligatorios faltantes</h3>
+      <p><strong>Dado que:</strong> Estoy en el formulario "Nuevo Producto"</p>
+      <p><strong>Cuando:</strong> Intento guardar sin nombre o precio</p>
+      <p><strong>Entonces:</strong> El sistema muestra error y no guarda</p>
+      <button class="btn-test" onclick="testHU1_Escenario2()">Ejecutar Prueba</button>
+      <div id="result-hu1-e2" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-case">
+      <h3>✅ Escenario 3: Código duplicado</h3>
+      <p><strong>Dado que:</strong> Ya existe producto con código "SKU-001"</p>
+      <p><strong>Cuando:</strong> Intento guardar otro con "SKU-001"</p>
+      <p><strong>Entonces:</strong> El sistema muestra error de duplicidad</p>
+      <button class="btn-test" onclick="testHU1_Escenario3()">Ejecutar Prueba</button>
+      <div id="result-hu1-e3" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-case">
+      <h3>✅ Corrección: Stock no negativo</h3>
+      <p><strong>Cuando:</strong> Intento guardar producto con stock negativo</p>
+      <p><strong>Entonces:</strong> El sistema muestra error</p>
+      <button class="btn-test" onclick="testHU1_StockNegativo()">Ejecutar Prueba</button>
+      <div id="result-hu1-stock" class="result" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>HU-2: Registrar un nuevo proveedor</h2>
+    
+    <div class="test-case">
+      <h3>✅ Escenario 1: Registro exitoso</h3>
+      <p><strong>Cuando:</strong> Ingreso razón social "Distribuidora XYZ S.A." y contacto</p>
+      <p><strong>Entonces:</strong> El proveedor se guarda correctamente</p>
+      <button class="btn-test" onclick="testHU2_Escenario1()">Ejecutar Prueba</button>
+      <div id="result-hu2-e1" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-case">
+      <h3>✅ Escenario 2: Razón social faltante</h3>
+      <p><strong>Cuando:</strong> Intento guardar sin razón social</p>
+      <p><strong>Entonces:</strong> El sistema muestra error</p>
+      <button class="btn-test" onclick="testHU2_Escenario2()">Ejecutar Prueba</button>
+      <div id="result-hu2-e2" class="result" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>HU-3: Registrar salida de inventario</h2>
+    
+    <div class="test-case">
+      <h3>✅ Escenario 1: Salida de stock exitosa</h3>
+      <p><strong>Dado que:</strong> El producto "Camisa Talla M" tiene 50 unidades</p>
+      <p><strong>Cuando:</strong> Registro salida de 3 unidades</p>
+      <p><strong>Entonces:</strong> Stock se actualiza a 47 unidades</p>
+      <button class="btn-test" onclick="testHU3_Escenario1()">Ejecutar Prueba</button>
+      <div id="result-hu3-e1" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-case">
+      <h3>✅ Escenario 2: Stock insuficiente</h3>
+      <p><strong>Dado que:</strong> Un producto tiene 2 unidades</p>
+      <p><strong>Cuando:</strong> Intento registrar salida de 5 unidades</p>
+      <p><strong>Entonces:</strong> El sistema muestra error de stock insuficiente</p>
+      <button class="btn-test" onclick="testHU3_Escenario2()">Ejecutar Prueba</button>
+      <div id="result-hu3-e2" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-case">
+      <h3>✅ Escenario 3: Historial de movimiento</h3>
+      <p><strong>Cuando:</strong> Registro una salida exitosa</p>
+      <p><strong>Entonces:</strong> Aparece en el historial con fecha, tipo y cantidad</p>
+      <button class="btn-test" onclick="testHU3_Escenario3()">Ejecutar Prueba</button>
+      <div id="result-hu3-e3" class="result" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>HU-4: Consultar ingresos totales por rango de fechas</h2>
+    
+    <div class="test-case">
+      <h3>✅ Escenario 1: Reporte con ventas</h3>
+      <p><strong>Dado que:</strong> Hay ventas registradas hoy</p>
+      <p><strong>Cuando:</strong> Genero reporte de hoy</p>
+      <p><strong>Entonces:</strong> El reporte muestra el total correcto</p>
+      <button class="btn-test" onclick="testHU4_Escenario1()">Ejecutar Prueba</button>
+      <div id="result-hu4-e1" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-case">
+      <h3>✅ Escenario 2: Reporte sin ventas</h3>
+      <p><strong>Cuando:</strong> Genero reporte de un periodo sin ventas</p>
+      <p><strong>Entonces:</strong> El reporte muestra $0</p>
+      <button class="btn-test" onclick="testHU4_Escenario2()">Ejecutar Prueba</button>
+      <div id="result-hu4-e2" class="result" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <button class="btn-clear" onclick="limpiarDatos()">🗑️ Limpiar todos los datos</button>
+    <button class="btn-test" onclick="ejecutarTodasLasPruebas()">▶️ Ejecutar TODAS las pruebas</button>
+    <p><small>Nota: Se recomienda limpiar los datos antes de ejecutar las pruebas</small></p>
+  </div>
+
+  <script type="module">
+    import { guardarProducto, getProductosVisibles, registrarSalida, getMovimientos, generarReporteIngresos } from './js/dataManager.js';
+    import { guardarProveedor, getProveedoresVisibles } from './js/dataManager.js';
+
+    window.dataManager = {
+      guardarProducto,
+      getProductosVisibles,
+      guardarProveedor,
+      getProveedoresVisibles,
+      registrarSalida,
+      getMovimientos,
+      generarReporteIngresos
+    };
+
+    function mostrarResultado(elementId, exito, mensaje) {
+      const el = document.getElementById(elementId);
+      el.style.display = 'block';
+      el.className = 'result ' + (exito ? 'success' : 'error');
+      el.textContent = (exito ? '✅ ' : '❌ ') + mensaje;
+    }
+
+    window.testHU1_Escenario1 = function() {
+      const res = window.dataManager.guardarProducto({
+        codigo: 'SKU-001',
+        nombre: 'Camisa Talla M',
+        precio: 10,
+        stock: 50
+      });
+      const lista = window.dataManager.getProductosVisibles();
+      const encontrado = lista.find(p => p.codigo === 'SKU-001');
+      mostrarResultado('result-hu1-e1', res.success && encontrado, 
+        res.success && encontrado ? 'Producto guardado y visible en lista' : 'Error: ' + (res.error || 'No encontrado'));
+    };
+
+    window.testHU1_Escenario2 = function() {
+      const res1 = window.dataManager.guardarProducto({codigo: 'TEST', nombre: '', precio: 10, stock: 0});
+      const res2 = window.dataManager.guardarProducto({codigo: 'TEST2', nombre: 'Test', stock: 0});
+      mostrarResultado('result-hu1-e2', !res1.success && !res2.success,
+        !res1.success && !res2.success ? 'Validación correcta de campos obligatorios' : 'Error: Se permitió guardar sin datos requeridos');
+    };
+
+    window.testHU1_Escenario3 = function() {
+      window.dataManager.guardarProducto({codigo: 'DUP-001', nombre: 'Test Dup', precio: 5, stock: 10});
+      const res = window.dataManager.guardarProducto({codigo: 'DUP-001', nombre: 'Test Dup 2', precio: 6, stock: 20});
+      mostrarResultado('result-hu1-e3', !res.success && res.error.includes('duplicado'),
+        !res.success ? 'Validación correcta de código duplicado' : 'Error: Se permitió código duplicado');
+    };
+
+    window.testHU1_StockNegativo = function() {
+      const res = window.dataManager.guardarProducto({codigo: 'NEG-001', nombre: 'Test Neg', precio: 5, stock: -10});
+      mostrarResultado('result-hu1-stock', !res.success && res.error.includes('negativo'),
+        !res.success ? 'Validación correcta de stock negativo' : 'Error: Se permitió stock negativo');
+    };
+
+    window.testHU2_Escenario1 = function() {
+      const res = window.dataManager.guardarProveedor({
+        razonSocial: 'Distribuidora XYZ S.A.',
+        contacto: 'Juan Pérez',
+        telefono: '0991234567',
+        email: 'contacto@xyz.com',
+        direccion: 'Av. Principal #123'
+      });
+      mostrarResultado('result-hu2-e1', res.success, res.success ? 'Proveedor guardado correctamente' : 'Error: ' + res.error);
+    };
+
+    window.testHU2_Escenario2 = function() {
+      const res = window.dataManager.guardarProveedor({razonSocial: '', contacto: 'Test'});
+      mostrarResultado('result-hu2-e2', !res.success && res.error.includes('obligatoria'),
+        !res.success ? 'Validación correcta de razón social obligatoria' : 'Error: Se permitió guardar sin razón social');
+    };
+
+    window.testHU3_Escenario1 = function() {
+      // Primero crear producto con stock 50
+      window.dataManager.guardarProducto({codigo: 'CAMISA-M', nombre: 'Camisa Talla M', precio: 25, stock: 50});
+      const res = window.dataManager.registrarSalida({
+        codigoProducto: 'CAMISA-M',
+        nombreProducto: 'Camisa Talla M',
+        cantidad: 3,
+        tipo: 'venta',
+        stockAnterior: 50
+      });
+      mostrarResultado('result-hu3-e1', res.success && res.stockNuevo === 47,
+        res.success ? 'Stock actualizado correctamente a ' + res.stockNuevo : 'Error: ' + res.error);
+    };
+
+    window.testHU3_Escenario2 = function() {
+      window.dataManager.guardarProducto({codigo: 'PANT-L', nombre: 'Pantalón Talla L', precio: 30, stock: 2});
+      const res = window.dataManager.registrarSalida({
+        codigoProducto: 'PANT-L',
+        nombreProducto: 'Pantalón Talla L',
+        cantidad: 5,
+        tipo: 'venta',
+        stockAnterior: 2
+      });
+      mostrarResultado('result-hu3-e2', !res.success && res.error.includes('insuficiente'),
+        !res.success ? 'Validación correcta de stock insuficiente' : 'Error: Se permitió salida con stock insuficiente');
+    };
+
+    window.testHU3_Escenario3 = function() {
+      const movimientosAntes = window.dataManager.getMovimientos().length;
+      window.dataManager.guardarProducto({codigo: 'TEST-MOV', nombre: 'Test Movimiento', precio: 15, stock: 20});
+      window.dataManager.registrarSalida({
+        codigoProducto: 'TEST-MOV',
+        nombreProducto: 'Test Movimiento',
+        cantidad: 5,
+        tipo: 'venta',
+        stockAnterior: 20
+      });
+      const movimientosDespues = window.dataManager.getMovimientos().length;
+      mostrarResultado('result-hu3-e3', movimientosDespues > movimientosAntes,
+        movimientosDespues > movimientosAntes ? 'Movimiento registrado en historial' : 'Error: No se registró en historial');
+    };
+
+    window.testHU4_Escenario1 = function() {
+      // Crear producto y venta de hoy
+      window.dataManager.guardarProducto({codigo: 'VENTA-HOY', nombre: 'Producto Hoy', precio: 50, stock: 100});
+      window.dataManager.registrarSalida({
+        codigoProducto: 'VENTA-HOY',
+        nombreProducto: 'Producto Hoy',
+        cantidad: 2,
+        tipo: 'venta',
+        stockAnterior: 100
+      });
+      
+      const hoy = new Date().toISOString().split('T')[0];
+      const res = window.dataManager.generarReporteIngresos(hoy, hoy);
+      mostrarResultado('result-hu4-e1', res.success && res.total >= 100,
+        res.success ? 'Reporte generado: $' + res.total.toFixed(2) + ' en ' + res.cantidad + ' venta(s)' : 'Error: ' + res.error);
+    };
+
+    window.testHU4_Escenario2 = function() {
+      const ayer = new Date();
+      ayer.setDate(ayer.getDate() - 10);
+      const ayerStr = ayer.toISOString().split('T')[0];
+      const res = window.dataManager.generarReporteIngresos(ayerStr, ayerStr);
+      mostrarResultado('result-hu4-e2', res.success && res.total === 0,
+        res.success ? 'Reporte sin ventas: $' + res.total.toFixed(2) : 'Error: ' + res.error);
+    };
+
+    window.limpiarDatos = function() {
+      if (confirm('¿Está seguro de limpiar todos los datos?')) {
+        localStorage.clear();
+        alert('Datos limpiados. Recargue la página.');
+        location.reload();
+      }
+    };
+
+    window.ejecutarTodasLasPruebas = function() {
+      if (confirm('¿Desea limpiar los datos antes de ejecutar todas las pruebas?')) {
+        localStorage.clear();
+      }
+      setTimeout(() => testHU1_Escenario1(), 100);
+      setTimeout(() => testHU1_Escenario2(), 200);
+      setTimeout(() => testHU1_Escenario3(), 300);
+      setTimeout(() => testHU1_StockNegativo(), 400);
+      setTimeout(() => testHU2_Escenario1(), 500);
+      setTimeout(() => testHU2_Escenario2(), 600);
+      setTimeout(() => testHU3_Escenario1(), 700);
+      setTimeout(() => testHU3_Escenario2(), 800);
+      setTimeout(() => testHU3_Escenario3(), 900);
+      setTimeout(() => testHU4_Escenario1(), 1000);
+      setTimeout(() => testHU4_Escenario2(), 1100);
+    };
+  </script>
+</body>
+</html>

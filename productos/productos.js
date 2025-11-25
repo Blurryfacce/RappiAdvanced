@@ -1,4 +1,5 @@
 import { eliminarProducto, getProductosVisibles, guardarProducto } from "../js/dataManager.js";
+import { getCurrentUser, isLoggedIn, isAdmin } from "../js/auth.js";
 
 const form = document.getElementById("productoForm");
 const messageEl = document.getElementById("message");
@@ -57,12 +58,13 @@ form.addEventListener("submit", async (e) => {
     codigo: form.codigo.value.trim(),
     nombre: form.nombre.value.trim(),
     precio: parseFloat(form.precio.value),
-    stock: parseInt(form.stock.value) || 0
+    stock: (function(){ const v = form.stock.value; return v === '' ? 0 : parseInt(v, 10); })()
   };
 
   if (!producto.codigo) return showMessage("error", "El código es obligatorio.");
   if (!producto.nombre) return showMessage("error", "El nombre es obligatorio.");
   if (Number.isNaN(producto.precio) || producto.precio < 0) return showMessage("error", "Precio inválido.");
+  if (Number.isNaN(producto.stock) || producto.stock < 0) return showMessage("error", "El stock no puede ser negativo");
 
   try {
     const res = await Promise.resolve(guardarProducto(producto));
@@ -79,7 +81,9 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", loadProductos);
+document.addEventListener("DOMContentLoaded", function () {
+  loadProductos();
+});
 
 // Delegación de eventos para el botón eliminar
 tableBody.addEventListener('click', async (evt) => {

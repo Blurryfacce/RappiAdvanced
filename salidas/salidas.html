@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Salidas de Inventario - RappiAdvanced</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="salidas.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Registrar Salida de Inventario</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="btn btn-primary btn-small">Inicio</a>
+    </nav>
+  </header>
+
+  <section class="container">
+    <h2>Nueva Salida</h2>
+    <form id="salidaForm" novalidate>
+      <div class="form-row">
+        <label for="producto">Producto</label>
+        <select id="producto" name="producto" required>
+          <option value="">-- Seleccione un producto --</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="stockActual">Stock Actual</label>
+        <input id="stockActual" name="stockActual" type="text" readonly disabled />
+      </div>
+      <div class="form-row">
+        <label for="cantidad">Cantidad a Retirar</label>
+        <input id="cantidad" name="cantidad" type="number" step="1" min="1" required />
+      </div>
+      <div class="form-row">
+        <label for="tipo">Tipo de Salida</label>
+        <select id="tipo" name="tipo" required>
+          <option value="venta">Venta</option>
+          <option value="ajuste">Ajuste</option>
+          <option value="devolución">Devolución</option>
+          <option value="merma">Merma</option>
+        </select>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Registrar Salida</button>
+        <button type="reset" id="btnReset" class="secondary">Limpiar</button>
+      </div>
+
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </form>
+
+    <h2>Historial de Movimientos</h2>
+    <div class="table-wrap">
+      <table id="movimientosTable">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Stock Anterior</th>
+            <th>Stock Nuevo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- rows dinámicos -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script type="module" src="salidas.js"></script>
+</body>
+</html>

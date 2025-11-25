@@ -5,6 +5,8 @@
  * aplicando las reglas de negocio (validaciones) de las HU.
  */
 
+import { isAdmin, isLoggedIn } from './auth.js';
+
 // --- 1. INICIALIZACIÓN ---
 // Esta función se asegura de que localStorage tenga las "tablas" (listas)
 // creadas, aunque estén vacías, para evitar errores al leerlas.
@@ -14,6 +16,12 @@ function init() {
     }
     if (!localStorage.getItem('proveedores')) {
         localStorage.setItem('proveedores', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('movimientos')) {
+        localStorage.setItem('movimientos', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('ventas')) {
+        localStorage.setItem('ventas', JSON.stringify([]));
     }
     console.log("Data Manager inicializado. Listo para operar.");
 }
@@ -38,9 +46,24 @@ function getProductos() {
  * @returns {object} - {success: true} o {success: false, error: "Mensaje de error"}
  */
 export function guardarProducto(producto) {
-    
     // --- Validación 1: Campos obligatorios (CA de Tarea4-G6) ---
     // Nombre obligatorio. Precio puede ser 0 pero no puede ser undefined o NaN
+    if (!producto.codigo || String(producto.codigo).trim() === '') {
+        console.error("Error de validación: Código es obligatorio.");
+        return {
+            success: false,
+            error: "Campo obligatorio faltante: Código."
+        };
+    }
+
+    // Validación: stock no negativo
+    if (producto.stock !== undefined && producto.stock !== null && Number(producto.stock) < 0) {
+        console.error("Error de validación: Stock negativo no permitido.");
+        return {
+            success: false,
+            error: "El stock no puede ser negativo"
+        };
+    }
     if (!producto.nombre || String(producto.nombre).trim() === '') {
         console.error("Error de validación: Nombre es obligatorio.");
         return { 
@@ -60,13 +83,13 @@ export function guardarProducto(producto) {
 
     // --- Validación 2: Código duplicado (CA de Tarea4-G6) ---
     // .some() es una forma rápida de ver si AL MENOS UN elemento cumple la condición
-    const yaExisteCodigo = productosActuales.some(p => p.codigo === producto.codigo);
+    const yaExisteCodigo = productosActuales.some(p => String(p.codigo).trim() === String(producto.codigo).trim());
     
     if (yaExisteCodigo) {
         console.error("Error de validación: Código de producto duplicado.");
         return { 
             success: false, 
-            error: "Error de duplicidad: El código de producto ya existe." 
+            error: "Ya existe un producto con este código" 
         };
     }
 
@@ -306,8 +329,156 @@ export function eliminarProveedor(razonSocial) {
     return { success: true };
 }
 
+// --- 4. FUNCIONES DE SALIDAS DE INVENTARIO (HU-3) ---
 
-// --- 4. EJECUCIÓN INICIAL ---
+/**
+ * (PRIVADA) Obtiene la lista de movimientos de inventario.
+ * @returns {Array} Un array de objetos de movimiento.
+ */
+function getMovimientosList() {
+    return JSON.parse(localStorage.getItem('movimientos')) || [];
+}
+
+/**
+ * (PÚBLICA) Registra una salida de inventario.
+ * @param {object} salida - {codigoProducto, nombreProducto, cantidad, tipo, stockAnterior}
+ * @returns {object} - {success: true, stockNuevo} o {success: false, error}
+ */
+export function registrarSalida(salida) {
+    // Validar que se haya seleccionado un producto
+    if (!salida.codigoProducto) {
+        return { success: false, error: "Debe seleccionar un producto." };
+    }
+
+    // Validar cantidad
+    if (!salida.cantidad || salida.cantidad <= 0) {
+        return { success: false, error: "La cantidad debe ser mayor a 0." };
+    }
+
+    // Obtener el producto actual
+    const productos = getProductos();
+    const producto = productos.find(p => p.codigo === salida.codigoProducto);
+    
+    if (!producto) {
+        return { success: false, error: "Producto no encontrado." };
+    }
+
+    const stockActual = parseInt(producto.stock || 0, 10);
+    const cantidadSalida = parseInt(salida.cantidad, 10);
+
+    // Validar stock insuficiente
+    if (stockActual < cantidadSalida) {
+        return { 
+            success: false, 
+            error: `Stock insuficiente. Stock actual: ${stockActual} unidades.` 
+        };
+    }
+
+    // Actualizar el stock del producto
+    const stockNuevo = stockActual - cantidadSalida;
+    producto.stock = stockNuevo;
+    localStorage.setItem('productos', JSON.stringify(productos));
+
+    // Registrar el movimiento en el historial
+    const movimientos = getMovimientosList();
+    const movimiento = {
+        fecha: new Date().toLocaleString('es-EC'),
+        codigoProducto: salida.codigoProducto,
+        nombreProducto: salida.nombreProducto,
+        tipo: salida.tipo || 'venta',
+        cantidad: cantidadSalida,
+        stockAnterior: stockActual,
+        stockNuevo: stockNuevo
+    };
+    movimientos.push(movimiento);
+    localStorage.setItem('movimientos', JSON.stringify(movimientos));
+
+    // Si el tipo es venta, registrar también en ventas para el reporte (HU-4)
+    if (salida.tipo === 'venta') {
+        const ventas = getVentasList();
+        const precioUnitario = parseFloat(producto.precio || 0);
+        const totalVenta = precioUnitario * cantidadSalida;
+        
+        const venta = {
+            fecha: new Date().toISOString(),
+            fechaFormato: new Date().toLocaleString('es-EC'),
+            codigoProducto: salida.codigoProducto,
+            nombreProducto: salida.nombreProducto,
+            cantidad: cantidadSalida,
+            precioUnitario: precioUnitario,
+            total: totalVenta
+        };
+        ventas.push(venta);
+        localStorage.setItem('ventas', JSON.stringify(ventas));
+    }
+
+    console.log("Salida registrada exitosamente:", movimiento);
+    return { success: true, stockNuevo: stockNuevo };
+}
+
+/**
+ * (PÚBLICA) Obtiene el historial de movimientos.
+ * @returns {Array} Un array de movimientos.
+ */
+export function getMovimientos() {
+    return getMovimientosList();
+}
+
+// --- 5. FUNCIONES DE REPORTES DE VENTAS (HU-4) ---
+
+/**
+ * (PRIVADA) Obtiene la lista de ventas.
+ * @returns {Array} Un array de objetos de venta.
+ */
+function getVentasList() {
+    return JSON.parse(localStorage.getItem('ventas')) || [];
+}
+
+/**
+ * (PÚBLICA) Genera un reporte de ingresos por rango de fechas.
+ * @param {string} fechaInicio - Fecha de inicio en formato ISO (YYYY-MM-DD)
+ * @param {string} fechaFin - Fecha de fin en formato ISO (YYYY-MM-DD)
+ * @returns {object} - {success: true, total, ventas, cantidad} o {success: false, error}
+ */
+export function generarReporteIngresos(fechaInicio, fechaFin) {
+    if (!fechaInicio || !fechaFin) {
+        return { success: false, error: "Debe especificar fechas de inicio y fin." };
+    }
+
+    const inicio = new Date(fechaInicio);
+    const fin = new Date(fechaFin);
+    fin.setHours(23, 59, 59, 999); // Incluir todo el día final
+
+    if (inicio > fin) {
+        return { success: false, error: "La fecha de inicio debe ser anterior a la fecha de fin." };
+    }
+
+    const ventas = getVentasList();
+    const ventasEnRango = ventas.filter(v => {
+        const fechaVenta = new Date(v.fecha);
+        return fechaVenta >= inicio && fechaVenta <= fin;
+    });
+
+    const totalIngresos = ventasEnRango.reduce((sum, v) => sum + (parseFloat(v.total) || 0), 0);
+
+    return {
+        success: true,
+        total: totalIngresos,
+        cantidad: ventasEnRango.length,
+        ventas: ventasEnRango
+    };
+}
+
+/**
+ * (PÚBLICA) Obtiene todas las ventas.
+ * @returns {Array} Un array de ventas.
+ */
+export function getVentas() {
+    return getVentasList();
+}
+
+
+// --- 6. EJECUCIÓN INICIAL ---
 // Esto ejecuta la función `init()` en cuanto el script es cargado por primera vez.
 init();
 

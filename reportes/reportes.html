@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reportes - RappiAdvanced</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="reportes.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Reportes de Ingresos</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="btn btn-primary btn-small">Inicio</a>
+    </nav>
+  </header>
+
+  <section class="container">
+    <h2>Generar Reporte de Ventas</h2>
+    <form id="reporteForm" novalidate>
+      <div class="form-row">
+        <label for="fechaInicio">Fecha Inicio</label>
+        <input id="fechaInicio" name="fechaInicio" type="date" required />
+      </div>
+      <div class="form-row">
+        <label for="fechaFin">Fecha Fin</label>
+        <input id="fechaFin" name="fechaFin" type="date" required />
+      </div>
+
+      <div class="actions">
+        <button type="submit">Generar Reporte</button>
+        <button type="button" id="btnHoy" class="secondary">Hoy</button>
+        <button type="button" id="btnAyer" class="secondary">Ayer</button>
+        <button type="button" id="btnSemana" class="secondary">Esta Semana</button>
+      </div>
+
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </form>
+
+    <div id="resultadoReporte" class="reporte-resultado" style="display: none;">
+      <h2>Resultado del Reporte</h2>
+      <div class="reporte-stats">
+        <div class="stat-card">
+          <div class="stat-label">Total de Ventas</div>
+          <div class="stat-value" id="cantidadVentas">0</div>
+        </div>
+        <div class="stat-card highlight">
+          <div class="stat-label">Ingresos Totales</div>
+          <div class="stat-value" id="totalIngresos">$0.00</div>
+        </div>
+      </div>
+
+      <h3>Detalle de Ventas</h3>
+      <div class="table-wrap">
+        <table id="ventasTable">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- rows dinámicos -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="reportes.js"></script>
+</body>
+</html>
